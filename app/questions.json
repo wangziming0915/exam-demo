@@ -1,0 +1,11 @@
+{
+  "pass_threshold": 1,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "When performing CPR on an adult, what is the recommended ratio of chest compressions to rescue breaths for trained rescuers?",
+      "options": {"A": "15:2", "B": "30:2", "C": "5:1", "D": "10:2"},
+      "correct_option": "B"
+    }
+  ]
+}

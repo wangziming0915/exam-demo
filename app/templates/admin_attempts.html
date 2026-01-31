@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Exam Attempts</title>
+</head>
+<body>
+  <h1>Exam Attempts</h1>
+
+  {% if attempts and attempts|length > 0 %}
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>token</th>
+        <th>score</th>
+        <th>total</th>
+        <th>passed</th>
+        <th>submitted_at</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in attempts %}
+      <tr>
+        <td><a href="/admin/attempts/{{ a.id }}?admin_key={{ admin_key }}">{{ a.id }}</a></td>
+        <td>{{ a.token }}</td>
+        <td>{{ a.score }}</td>
+        <td>{{ a.total }}</td>
+        <td>{% if a.passed %}Yes{% else %}No{% endif %}</td>
+        <td>{{ a.submitted_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No attempts found.</p>
+  {% endif %}
+
+</body>
+</html>

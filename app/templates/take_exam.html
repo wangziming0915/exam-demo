@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Take Exam</title>
+</head>
+<body>
+  {% if error %}
+    <p>{{ error }}</p>
+  {% else %}
+    <form method="post" action="/take-exam/{{ token }}/submit">
+      {% for question in questions %}
+        <fieldset>
+          <legend>{{ loop.index }}. {{ question.text }}</legend>
+          {% for key, text in question.options.items() %}
+            <div>
+              <label>
+                <input type="radio" name="answer_{{ question.id }}" value="{{ key }}">
+                {{ key }}. {{ text }}
+              </label>
+            </div>
+          {% endfor %}
+        </fieldset>
+      {% endfor %}
+
+      <button type="submit">Submit Exam</button>
+    </form>
+  {% endif %}
+</body>
+</html>

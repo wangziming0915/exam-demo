@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Attempt Detail</title>
+</head>
+<body>
+  <h1>Attempt {{ attempt.id }}</h1>
+
+  <p>
+    Token: {{ attempt.token }}<br>
+    Score: {{ attempt.score }} / {{ attempt.total }}<br>
+    Passed: {% if attempt.passed %}Yes{% else %}No{% endif %}
+  </p>
+
+  <h2>Answers</h2>
+  {% if answers and answers|length > 0 %}
+  <table>
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Selected</th>
+        <th>Correct</th>
+        <th>Correct?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in answers %}
+      <tr {% if not a.is_correct %}style="background-color:#f8d7da"{% endif %}>
+        <td>{{ a.question_id }}</td>
+        <td>{{ a.selected_option or '' }}</td>
+        <td>{{ a.correct_option or '' }}</td>
+        <td>{% if a.is_correct %}Yes{% else %}No{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No answers recorded.</p>
+  {% endif %}
+
+  <p><a href="/admin/attempts?admin_key={{ admin_key }}">Back to attempts</a></p>
+</body>
+</html>

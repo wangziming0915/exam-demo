@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Result</title>
+</head>
+<body>
+  <h1>Exam Result</h1>
+
+  <p>Score: {{ score }} / {{ total }}</p>
+  <p>Passed: {% if passed %}Yes{% else %}No{% endif %}</p>
+
+  {% if wrong_questions and wrong_questions|length > 0 %}
+  <h2>Wrong Questions</h2>
+  <ul>
+    {% for w in wrong_questions %}
+      <li>Question {{ w.question_id }} — Selected: {{ w.selected_option }} — Correct: {{ w.correct_option }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <p><a href="/payment-success">Back to payment</a></p>
+</body>
+</html>

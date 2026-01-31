@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Payment Success</title>
+</head>
+<body>
+  <h1>Payment Success</h1>
+
+  <form method="post" action="/payment-success/generate">
+    <button type="submit">Generate Exam Link</button>
+  </form>
+
+  {% if exam_link %}
+  <p>One-time exam link: <a href="{{ exam_link }}">{{ exam_link }}</a></p>
+  {% endif %}
+
+</body>
+</html>
