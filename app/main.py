@@ -21,7 +21,7 @@ templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/")
 def root_redirect():
-    return RedirectResponse(url="/payment-success")
+    return RedirectResponse(url="/payment")
 
 
 @app.on_event("startup")
@@ -29,6 +29,36 @@ def on_startup():
     # initialize database and preload questions into the grading service cache
     init_db()
     get_exam_public_view()
+
+
+@app.get("/payment")
+def payment_page(request: Request):
+    return templates.TemplateResponse("payment.html", {"request": request})
+
+
+@app.post("/payment/confirm")
+def payment_confirm(request: Request, db: Session = Depends(get_db)):
+    # Simulate payment confirmation, create one-time token
+    token_val = uuid.uuid4().hex
+    now = datetime.utcnow()
+    expires_at = now + timedelta(hours=1)
+
+    token_obj = ExamToken(
+        token=token_val,
+        created_at=now,
+        expires_at=expires_at,
+        is_submitted=False,
+        attempt_id=None,
+    )
+    db.add(token_obj)
+    db.commit()
+
+    try:
+        url = request.url_for("take_exam", token=token_val)
+    except Exception:
+        url = f"/take-exam/{token_val}"
+
+    return RedirectResponse(url=url, status_code=303)
 
 
 def _require_admin(request: Request) -> None:
